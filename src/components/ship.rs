@@ -2,6 +2,7 @@ use bevy::ecs::component::Tick;
 use bevy::prelude::Component;
 use derive_more::{Add, AddAssign};
 
+
 #[derive(Component)]
 pub struct Ship{
     pub items: Vec<ShipItemPlacement>,
