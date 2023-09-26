@@ -140,7 +140,18 @@ impl GridOccupations for ShipItem{
         }
     }
 }
+#[derive(Copy, Clone)]
+pub struct RepairModule{
 
+}
+impl RepairModule{
+    pub fn repair_rate(&self) -> f32{
+        0.01
+    }
+    pub fn repair_radius(&self) -> i8{
+        2
+    }
+}
 #[derive(Copy, Clone)]
 pub struct Thruster{
     pub active: bool,
@@ -151,6 +162,12 @@ pub struct Cannon{
     pub active: bool,
     pub last_shot_tick: Tick,
     pub ammo_box: Option<AmmoBox>,
+}
+
+impl Cannon {
+    pub fn shot_cooldown_seconds(&self) -> f32{
+        0.5
+    }
 }
 
 #[derive(Copy, Clone)]
