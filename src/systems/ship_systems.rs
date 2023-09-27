@@ -1,7 +1,8 @@
 use bevy::prelude::Query;
 use crate::components::{Ship, ShipItem};
-
-pub fn ship_system(
+use bevy::{log};
+/*
+pub fn ship_items_system(
     mut ship_query : Query<&mut Ship>,
     // get tick
 
@@ -25,4 +26,18 @@ pub fn ship_system(
             }
         });
     });
+}
+*/
+
+pub fn ship_movement_system(){
+    log::info!("ship_movement_system");
+}
+pub fn ship_shoot_system(){
+    log::info!("ship_movement_system");
+}
+pub fn enemy_die_system(){
+    log::info!("ship_movement_system");
+}
+pub fn projectile_system(){
+    log::info!("ship_movement_system");
 }

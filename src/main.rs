@@ -1,7 +1,10 @@
 use bevy::{DefaultPlugins, log};
-use bevy::ecs::schedule::ScheduleLabel;
+use bevy::ecs::schedule::{ScheduleLabel, SystemSetConfig};
 use bevy::ecs::system::SystemParam;
 use bevy::prelude::{App, FixedUpdate, IntoSystemSetConfig, IntoSystemSetConfigs, Schedule, SystemSet};
+use crate::components::GameTime;
+use crate::systems::{enemy_die_system, increment_tick, projectile_system, ship_movement_system, ship_shoot_system};
+use bevy::prelude::IntoSystemConfigs;
 
 mod systems;
 mod components;
@@ -12,6 +15,10 @@ pub struct PreFixedUpdate;
 
 #[derive(SystemSet, Clone, Debug, PartialEq, Eq, Hash)]
 pub struct PreFixedUpdateSystemsSet;
+#[derive(SystemSet, Clone, Debug, PartialEq, Eq, Hash)]
+pub struct FixedUpdateSystemsSet;
+#[derive(SystemSet, Clone, Debug, PartialEq, Eq, Hash)]
+pub struct PostFixedUpdateSystemsSet;
 
 // investigate this later:
 //#[derive(SystemParam)]
@@ -22,16 +29,30 @@ let mut main_schedule = Schedule::new();
         main_schedule.set_executor_kind(ExecutorKind::SingleThreaded);
 */
 
+// schedule.add_systems((propagate_system, modify_system).chain());
+
 fn main() {
+    //let pre_fixed_update_schedule = Schedule::default().add_systems((increment_tick, ship_movement_system, ship_shoot_system, enemy_die_system, projectile_system));
     App::new()
         .add_plugins(DefaultPlugins)
-        //.add_schedule(PreFixedUpdate, Schedule::default())
-        //.add_system_set()
-        //.add_systems(PreFixedUpdate, log_string.system())
-        .add_schedule(PreFixedUpdate, Schedule::default())
-        // .configure_set(UiSystem::Focus.in_base_set(CoreSet::PreUpdate))
-        .configure_set(PreFixedUpdateSystemsSet.before(FixedUpdate.set))
-        //.configure_sets((PreFixedUpdate, FixedUpdate).chain())
+        .insert_resource(GameTime::default())
+        .configure_set(FixedUpdate, PreFixedUpdateSystemsSet.before(FixedUpdateSystemsSet))
+        .configure_set(FixedUpdate, FixedUpdateSystemsSet)
+        .configure_set(FixedUpdate, PostFixedUpdateSystemsSet.after(FixedUpdateSystemsSet))
+
+        //.configure_sets(FixedUpdate,PreFixedUpdateSystemsSet)
+
+        .add_systems(FixedUpdate,(
+            (increment_tick).in_set(PreFixedUpdateSystemsSet),
+            (ship_movement_system, ship_shoot_system, enemy_die_system, projectile_system).chain().in_set(FixedUpdateSystemsSet),
+        ))
+
+
+        //.add_systems(FixedUpdate, (ship_movement_system, ship_shoot_system, enemy_die_system, projectile_system).chain())
+
+    //ship_movement_system, ship_shoot_system, enemy_die_system, projectile_system
+                // And run after increment_tick
+
         .run();
 }
 

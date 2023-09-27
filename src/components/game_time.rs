@@ -5,3 +5,11 @@ use bevy::prelude::{Component, Resource};
 pub struct GameTime{
     pub tick: Tick
 }
+
+impl Default for GameTime {
+    fn default() -> Self {
+        Self {
+            tick: Tick::new(0)
+        }
+    }
+}
