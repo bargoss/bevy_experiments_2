@@ -1,12 +1,13 @@
 use bevy::prelude::ResMut;
-use crate::components::GameTime;
+use crate::components::{GameTick, GameTime};
 use bevy::{log};
 
 pub fn increment_tick(
     mut game_time : ResMut<GameTime>,
 ){
-    let prev_tick_val = game_time.tick.get();
-    game_time.tick.set(prev_tick_val + 1);
+    let mut game_tick = &mut game_time.tick;
+    *game_tick += 1;
+
     //bevy log
-    log::info!("tick: {}", game_time.tick.get());
+    log::info!("tick: {}", game_time.tick);
 }

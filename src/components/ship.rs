@@ -1,6 +1,7 @@
 use bevy::ecs::component::Tick;
 use bevy::prelude::Component;
 use derive_more::{Add, AddAssign};
+use crate::components::GameTick;
 
 
 #[derive(Component)]
@@ -155,12 +156,12 @@ impl RepairModule{
 #[derive(Copy, Clone)]
 pub struct Thruster{
     pub active: bool,
-    pub activated_tick: Tick,
+    pub activated_tick: GameTick,
 }
 #[derive(Copy, Clone)]
 pub struct Cannon{
     pub active: bool,
-    pub last_shot_tick: Tick,
+    pub last_shot_tick: GameTick,
     pub ammo_box: Option<AmmoBox>,
 }
 

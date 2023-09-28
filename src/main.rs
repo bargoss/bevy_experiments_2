@@ -2,8 +2,9 @@ use bevy::{DefaultPlugins, log};
 use bevy::ecs::schedule::{ScheduleLabel, SystemSetConfig};
 use bevy::ecs::system::SystemParam;
 use bevy::prelude::{App, FixedUpdate, IntoSystemSetConfig, IntoSystemSetConfigs, Schedule, SystemSet};
-use crate::components::GameTime;
-use crate::systems::{enemy_die_system, increment_tick, projectile_system, ship_movement_system, ship_shoot_system};
+use crate::components::GameTick;
+use crate::systems::{increment_tick};
+//use crate::systems::{enemy_die_system, projectile_system, ship_movement_system, ship_shoot_system};
 use bevy::prelude::IntoSystemConfigs;
 
 mod systems;
@@ -35,7 +36,7 @@ fn main() {
     //let pre_fixed_update_schedule = Schedule::default().add_systems((increment_tick, ship_movement_system, ship_shoot_system, enemy_die_system, projectile_system));
     App::new()
         .add_plugins(DefaultPlugins)
-        .insert_resource(GameTime::default())
+        .insert_resource(GameTick::default())
         .configure_set(FixedUpdate, PreFixedUpdateSystemsSet.before(FixedUpdateSystemsSet))
         .configure_set(FixedUpdate, FixedUpdateSystemsSet)
         .configure_set(FixedUpdate, PostFixedUpdateSystemsSet.after(FixedUpdateSystemsSet))
@@ -44,7 +45,7 @@ fn main() {
 
         .add_systems(FixedUpdate,(
             (increment_tick).in_set(PreFixedUpdateSystemsSet),
-            (ship_movement_system, ship_shoot_system, enemy_die_system, projectile_system).chain().in_set(FixedUpdateSystemsSet),
+            //(ship_movement_system, ship_shoot_system, enemy_die_system, projectile_system).in_set(FixedUpdateSystemsSet),
         ))
 
 
