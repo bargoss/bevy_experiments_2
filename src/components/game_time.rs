@@ -11,7 +11,7 @@ use bevy::prelude::{Component, Resource};
 // define GameTick as u32
 pub type GameTick = u32;
 
-#[derive(Resource)]
+#[derive(Resource, Default)]
 pub struct GameTime{
     pub tick: GameTick,
 }

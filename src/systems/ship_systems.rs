@@ -9,7 +9,7 @@ pub fn ship_items_system(
     // get tick
 
 ){
-    let mut healer_grids = Vec::new();
+    let mut repair_center_grids = Vec::new();
     //let mut cannon_shots = Vec::new();
 
     let ticks_per_second = 60;
@@ -30,7 +30,9 @@ pub fn ship_items_system(
                     }
                 }
                 ShipItem::Thruster(_) => {}
-                ShipItem::RepairModule => {}
+                ShipItem::RepairModule => {
+                    repair_center_grids.push((item.pos));
+                }
             }
         });
     });
