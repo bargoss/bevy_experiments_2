@@ -10,7 +10,7 @@ use bevy::prelude::IntoSystemConfigs;
 mod systems;
 mod components;
 mod utilities;
-mod game_plugins;
+mod games;
 
 #[derive(ScheduleLabel, Clone, Debug, PartialEq, Eq, Hash)]
 pub struct PreFixedUpdate;
