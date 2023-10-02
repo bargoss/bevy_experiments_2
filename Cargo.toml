@@ -7,6 +7,15 @@ edition = "2021"
 
 [dependencies]
 bevy = {version = "0.11.2"}
+bevy-inspector-egui = "0.19.0"
 ## all feautes
 derive_more = {version = "1.0.0-beta.3", features = ["full"]}
 bevy_rapier2d = "0.22.0"
+
+# Enable a small amount of optimization in debug mode
+[profile.dev]
+opt-level = 1
+
+# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
+[profile.dev.package."*"]
+opt-level = 3
