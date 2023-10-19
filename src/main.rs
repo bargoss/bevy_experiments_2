@@ -8,6 +8,7 @@ use crate::systems::{increment_tick};
 use bevy::prelude::IntoSystemConfigs;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_rapier2d::prelude::{NoUserData, RapierDebugRenderPlugin, RapierPhysicsPlugin};
+//use naia_bevy_server::Plugin;
 
 mod systems;
 mod components;
