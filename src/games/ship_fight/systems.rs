@@ -22,9 +22,13 @@ pub fn ship_control(mut ships : Query<(&Ship, &Transform, &mut ExternalForce)>){
     ships.iter_mut().for_each(|(ship, transform, mut external_force)| {
         let position = transform.translation;
         let position2d = Vec2::new(position.x, position.y);
+        let right = transform.right();
+        let left = -right;
+        let right2d = Vec2::new(right.x, right.y);
+        let left2d = Vec2::new(left.x, left.y);
         let torque_arm = 0.35;
-        let right_thruster_pos_2d = Vec2::new(position.x + torque_arm, position.y);
-        let left_thruster_pos_2d = Vec2::new(position.x - torque_arm, position.y);
+        let right_thruster_pos_2d = position2d + right2d * torque_arm;
+        let left_thruster_pos_2d = position2d + left2d * torque_arm;
         let up = transform.up();
         let up2d = Vec2::new(up.x, up.y);
 
